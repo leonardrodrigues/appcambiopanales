@@ -7,7 +7,7 @@ from streamlit_gsheets import GSheetsConnection
 # 1. Configuración de página móvil
 st.set_page_config(page_title="Baby Log", layout="centered")
 
-# Estilos CSS definitivos para forzar la fila horizontal por tarjeta
+# Estilos CSS definitivos y compactos para forzar el tamaño de las imágenes
 st.markdown("""
     <style>
     /* Ocultar elementos nativos innecesarios */
@@ -22,8 +22,8 @@ st.markdown("""
     
     /* Optimizar los márgenes en pantallas de teléfono */
     .block-container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1rem !important;
         padding-left: 1rem !important;
         padding-right: 1rem !important;
         max-width: 450px !important;
@@ -38,16 +38,16 @@ st.markdown("""
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 24px;
-        padding: 1rem !important;
-        margin-bottom: 0.75rem !important;
+        padding: 0.8rem 1.2rem !important;
+        margin-bottom: 0.6rem !important;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
     }
 
-    /* Columna 1: Contenedor del Icono (Ancho fijo) */
+    /* Columna 1: FIJAR TAMAÑO COMPACTO DE LA IMAGEN (Evita que se estire) */
     [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) {
-        flex: 0 0 65px !important;
-        min-width: 65px !important;
-        max-width: 65px !important;
+        flex: 0 0 55px !important;
+        min-width: 55px !important;
+        max-width: 55px !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
@@ -56,13 +56,18 @@ st.markdown("""
     /* Columna 2: Contenedor del Texto + Botón Registrar */
     [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(2) {
         flex: 1 1 auto !important;
-        padding-left: 0.75rem !important;
+        padding-left: 1rem !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: 0.25rem !important;
+        gap: 0.2rem !important;
     }
 
-    /* Forzar que el botón ocupe todo el ancho de su columna */
+    /* Evitar los márgenes por defecto de la imagen nativa de Streamlit */
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) [data-testid="stImage"] {
+        width: 55px !important;
+    }
+
+    /* Forzar que el botón ocupe todo el ancho de su sección derecha */
     .stButton, .stButton>button {
         width: 100% !important;
     }
@@ -75,7 +80,7 @@ st.markdown("""
         font-weight: 600 !important;
         font-size: 14px !important;
         color: #475569 !important;
-        padding: 0.5rem 1rem !important;
+        padding: 0.4rem 1rem !important;
     }
     
     .stButton>button:active {
@@ -84,7 +89,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h2 style='text-align: center; color: #334155; margin-bottom: 1.5rem; font-size: 26px;'>Registro de Pañales 👶</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: #334155; margin-bottom: 1.2rem; font-size: 24px;'>Registro de Pañales 👶</h2>", unsafe_allow_html=True)
 
 # 2. Conexión con Google Sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -106,28 +111,28 @@ def guardar_registro(tipo):
     except Exception as e:
         st.error(f"Error: {e}")
 
-# 3. Interfaz Vertical de 2 Columnas (Icono Nativo + Texto/Botón)
+# 3. Interfaz Vertical con Imágenes Fijas a 55px (Sin estiramientos)
 
 # Fila 1: Pipí
-col1_img, col1_content = st.columns([1, 3])
+col1_img, col1_content = st.columns([1, 4])
 with col1_img:
-    st.image("pipiapp.png", use_container_width=True)
+    st.image("pipiapp.png", width=55)
 with col1_content:
-    st.markdown("<span style='font-weight:700; font-size:18px; color:#334155;'>Pipí</span>", unsafe_allow_html=True)
+    st.markdown("<span style='font-weight:700; font-size:16px; color:#334155;'>Pipí</span>", unsafe_allow_html=True)
     st.button("Registrar", key="btn_pipi", on_click=guardar_registro, args=("Pipí",))
 
 # Fila 2: Caca
-col2_img, col2_content = st.columns([1, 3])
+col2_img, col2_content = st.columns([1, 4])
 with col2_img:
-    st.image("cacaapp.png", use_container_width=True)
+    st.image("cacaapp.png", width=55)
 with col2_content:
-    st.markdown("<span style='font-weight:700; font-size:18px; color:#334155;'>Caca</span>", unsafe_allow_html=True)
+    st.markdown("<span style='font-weight:700; font-size:16px; color:#334155;'>Caca</span>", unsafe_allow_html=True)
     st.button("Registrar", key="btn_caca", on_click=guardar_registro, args=("Caca",))
 
 # Fila 3: Ambos
-col3_img, col3_content = st.columns([1, 3])
+col3_img, col3_content = st.columns([1, 4])
 with col3_img:
-    st.image("ambosapp.png", use_container_width=True)
+    st.image("ambosapp.png", width=55)
 with col3_content:
-    st.markdown("<span style='font-weight:700; font-size:18px; color:#334155;'>Ambos</span>", unsafe_allow_html=True)
+    st.markdown("<span style='font-weight:700; font-size:16px; color:#334155;'>Ambos</span>", unsafe_allow_html=True)
     st.button("Registrar", key="btn_ambos", on_click=guardar_registro, args=("Ambos",))
