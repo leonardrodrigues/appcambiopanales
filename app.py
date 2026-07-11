@@ -37,22 +37,21 @@ st.markdown("""
         padding: 0.75rem 1rem !important;
         margin-bottom: 0.75rem !important;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        width: 100% !important;
     }
     
-    /* Ajustes individuales de ancho para que no se colapsen */
-    [data-testid="stHorizontalBlock"] > div:nth-child(1) {
-        flex: 0 0 60px !important; /* Espacio fijo para la imagen */
-        min-width: 60px !important;
+    /* Ajustes basados en los contenedores de columna nativos de Streamlit */
+    [data-testid="stHorizontalBlock"] [data-testid="column"] {
+        flex-grow: 1 !important;
+        flex-shrink: 1 !important;
+        flex-basis: auto !important;
+        min-width: 0 !important;
     }
-    
-    [data-testid="stHorizontalBlock"] > div:nth-child(2) {
-        flex: 1 1 auto !important; /* El texto ocupa el espacio del centro */
-        padding-left: 0.5rem !important;
-    }
-    
-    [data-testid="stHorizontalBlock"] > div:nth-child(3) {
-        flex: 0 0 100px !important; /* Ancho fijo y compacto para el botón */
-        min-width: 100px !important;
+
+    /* Empujar y dar tamaño específico al botón de registrar */
+    .stButton {
+        text-align: right !important;
+        width: 100% !important;
     }
 
     /* Corrección de márgenes internos de Streamlit que empujan el texto */
@@ -60,16 +59,16 @@ st.markdown("""
         margin-bottom: 0px !important;
     }
 
-    /* Estilo del botón "Registrar" compacto */
+    /* Estilo del botón "Registrar" compacto y visible */
     .stButton>button {
-        width: 100% !important;
+        width: 90px !important; /* Ancho fijo y seguro para el botón en móviles */
         border-radius: 12px;
         border: 1px solid #CBD5E1;
         background-color: #F8FAFC;
         font-weight: 600;
-        font-size: 14px !important;
+        font-size: 13px !important;
         color: #475569;
-        padding: 0.4rem 0.5rem !important;
+        padding: 0.4rem 0.2rem !important;
     }
     </style>
 """, unsafe_allow_html=True)
