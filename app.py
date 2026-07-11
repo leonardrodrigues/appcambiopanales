@@ -7,89 +7,54 @@ from streamlit_gsheets import GSheetsConnection
 # 1. Configuración de página móvil
 st.set_page_config(page_title="Baby Log", layout="centered")
 
-# Estilos CSS definitivos y compactos para forzar el tamaño de las imágenes
+# Estilos CSS básicos (Solo para ocultar menús y dar forma a las tarjetas)
 st.markdown("""
     <style>
-    /* Ocultar elementos nativos innecesarios */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Fondo limpio para la aplicación */
-    .stApp {
-        background-color: #F8FAFC !important;
-    }
-    
-    /* Optimizar los márgenes en pantallas de teléfono */
     .block-container {
         padding-top: 1.5rem !important;
         padding-bottom: 1rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
         max-width: 450px !important;
     }
-
-    /* FORZAR LA VISTA EN FILA (Icono izquierda, Contenido derecha) */
-    [data-testid="stHorizontalBlock"] {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important; 
+    
+    /* Contenedor tipo tarjeta blanca para cada opción */
+    .card {
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
-        border-radius: 24px;
-        padding: 0.8rem 1.2rem !important;
-        margin-bottom: 0.6rem !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-    }
-
-    /* Columna 1: FIJAR TAMAÑO COMPACTO DE LA IMAGEN (Evita que se estire) */
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) {
-        flex: 0 0 55px !important;
-        min-width: 55px !important;
-        max-width: 55px !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
+        border-radius: 20px;
+        padding: 1.2rem;
+        margin-bottom: 0.8rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        text-align: center;
     }
     
-    /* Columna 2: Contenedor del Texto + Botón Registrar */
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(2) {
-        flex: 1 1 auto !important;
-        padding-left: 1rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 0.2rem !important;
+    /* Espaciado del texto del título del pañal */
+    .card-title {
+        font-weight: 700;
+        font-size: 18px;
+        color: #334155;
+        margin-top: 0.5rem;
+        margin-bottom: 0.8rem;
+        display: block;
     }
 
-    /* Evitar los márgenes por defecto de la imagen nativa de Streamlit */
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) [data-testid="stImage"] {
-        width: 55px !important;
-    }
-
-    /* Forzar que el botón ocupe todo el ancho de su sección derecha */
-    .stButton, .stButton>button {
-        width: 100% !important;
-    }
-
-    /* Estilo del botón Registrar */
+    /* Botón Registrar adaptado al ancho de la tarjeta */
     .stButton>button {
+        width: 100% !important;
         border-radius: 12px !important;
         border: 1px solid #CBD5E1 !important;
         background-color: #F8FAFC !important;
         font-weight: 600 !important;
-        font-size: 14px !important;
         color: #475569 !important;
-        padding: 0.4rem 1rem !important;
-    }
-    
-    .stButton>button:active {
-        background-color: #E2E8F0 !important;
+        padding: 0.5rem 1rem !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h2 style='text-align: center; color: #334155; margin-bottom: 1.2rem; font-size: 24px;'>Registro de Pañales 👶</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: #334155; margin-bottom: 1.5rem; font-size: 26px;'>Registro de Pañales 👶</h2>", unsafe_allow_html=True)
 
 # 2. Conexión con Google Sheets
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -111,28 +76,25 @@ def guardar_registro(tipo):
     except Exception as e:
         st.error(f"Error: {e}")
 
-# 3. Interfaz Vertical con Imágenes Fijas a 55px (Sin estiramientos)
+# 3. Interfaz Vertical Nativa Segura (Sin columnas que se desborden)
 
-# Fila 1: Pipí
-col1_img, col1_content = st.columns([1, 4])
-with col1_img:
-    st.image("pipiapp.png", width=55)
-with col1_content:
-    st.markdown("<span style='font-weight:700; font-size:16px; color:#334155;'>Pipí</span>", unsafe_allow_html=True)
-    st.button("Registrar", key="btn_pipi", on_click=guardar_registro, args=("Pipí",))
+# Tarjeta 1: Pipí
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.image("pipiapp.png", width=60)
+st.markdown('<span class="card-title">Pipí</span>', unsafe_allow_html=True)
+st.button("Registrar Pipí", key="btn_pipi", on_click=guardar_registro, args=("Pipí",))
+st.markdown('</div>', unsafe_allow_html=True)
 
-# Fila 2: Caca
-col2_img, col2_content = st.columns([1, 4])
-with col2_img:
-    st.image("cacaapp.png", width=55)
-with col2_content:
-    st.markdown("<span style='font-weight:700; font-size:16px; color:#334155;'>Caca</span>", unsafe_allow_html=True)
-    st.button("Registrar", key="btn_caca", on_click=guardar_registro, args=("Caca",))
+# Tarjeta 2: Caca
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.image("cacaapp.png", width=60)
+st.markdown('<span class="card-title">Caca</span>', unsafe_allow_html=True)
+st.button("Registrar Caca", key="btn_caca", on_click=guardar_registro, args=("Caca",))
+st.markdown('</div>', unsafe_allow_html=True)
 
-# Fila 3: Ambos
-col3_img, col3_content = st.columns([1, 4])
-with col3_img:
-    st.image("ambosapp.png", width=55)
-with col3_content:
-    st.markdown("<span style='font-weight:700; font-size:16px; color:#334155;'>Ambos</span>", unsafe_allow_html=True)
-    st.button("Registrar", key="btn_ambos", on_click=guardar_registro, args=("Ambos",))
+# Tarjeta 3: Ambos
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.image("ambosapp.png", width=60)
+st.markdown('<span class="card-title">Ambos</span>', unsafe_allow_html=True)
+st.button("Registrar Ambos", key="btn_ambos", on_click=guardar_registro, args=("Ambos",))
+st.markdown('</div>', unsafe_allow_html=True)
