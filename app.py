@@ -10,49 +10,66 @@ st.set_page_config(page_title="Baby Log", layout="centered")
 # Estilos CSS específicos para crear "Filas-Botón" masivas y táctiles
 st.markdown("""
     <style>
+    /* Ocultar elementos nativos innecesarios */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
+    /* Optimizar los márgenes en pantallas de teléfono */
     .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        max-width: 480px !important; /* Ancho ideal para simular app nativa */
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        max-width: 480px !important;
     }
 
-    /* Estructura de fila contenedora (Icono + Texto) */
-    .row-container {
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
-        padding: 0.5rem 0;
-    }
-
-    /* Forzar que las columnas se alineen verticalmente de forma perfecta */
+    /* FORZAR LA VISTA EN FILA (Imagen + Texto + Botón en línea) */
     [data-testid="stHorizontalBlock"] {
-        align-items: center !important;
-        background-color: #F8FAFC;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important; /* Centra verticalmente los 3 elementos */
+        justify-content: space-between !important;
+        background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 20px;
-        padding: 0.8rem 1.2rem !important;
-        margin-bottom: 1rem !important;
-        transition: all 0.2s ease-in-out;
+        padding: 0.75rem 1rem !important;
+        margin-bottom: 0.75rem !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
     
-    [data-testid="stHorizontalBlock"]:hover {
-        background-color: #F1F5F9;
-        border-color: #CBD5E1;
+    /* Ajustes individuales de ancho para que no se colapsen */
+    [data-testid="stHorizontalBlock"] > div:nth-child(1) {
+        flex: 0 0 60px !important; /* Espacio fijo para la imagen */
+        min-width: 60px !important;
+    }
+    
+    [data-testid="stHorizontalBlock"] > div:nth-child(2) {
+        flex: 1 1 auto !important; /* El texto ocupa el espacio del centro */
+        padding-left: 0.5rem !important;
+    }
+    
+    [data-testid="stHorizontalBlock"] > div:nth-child(3) {
+        flex: 0 0 100px !important; /* Ancho fijo y compacto para el botón */
+        min-width: 100px !important;
     }
 
-    /* Estilo del botón "Registrar" a la derecha */
+    /* Corrección de márgenes internos de Streamlit que empujan el texto */
+    [data-testid="stMarkdownContainer"] p {
+        margin-bottom: 0px !important;
+    }
+
+    /* Estilo del botón "Registrar" compacto */
     .stButton>button {
         width: 100% !important;
         border-radius: 12px;
         border: 1px solid #CBD5E1;
-        background-color: #FFFFFF;
+        background-color: #F8FAFC;
         font-weight: 600;
+        font-size: 14px !important;
         color: #475569;
-        padding: 0.6rem 1rem !important;
+        padding: 0.4rem 0.5rem !important;
     }
     </style>
 """, unsafe_allow_html=True)
