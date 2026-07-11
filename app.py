@@ -29,47 +29,43 @@ st.markdown(f"""
     footer {{visibility: hidden;}}
     header {{visibility: hidden;}}
     
-    /* Optimizar los márgenes en pantallas de teléfono */
-    .block-container {{
-        padding-top: 1.5rem !important;
-        padding-bottom: 1rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        max-width: 480px !important;
-    }}
-
-    /* FILA CONTENEDORA (Forzar siempre horizontal en móvil) */
-    [data-testid="stHorizontalBlock"] {{
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important; 
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 24px;
-        padding: 0.8rem 1.2rem !important;
-        margin-bottom: 0.8rem !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-    }}
-
-    /* Columna de la Imagen/Botón (Ancho fijo) */
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) {{
-        flex: 0 0 65px !important;
-        min-width: 65px !important;
+    /* Fondo agradable para la aplicación */
+    .stApp {{
+        background-color: #F8FAFC !important;
     }}
     
-    /* Columna del Texto (Ocupa el resto de la pantalla) */
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(2) {{
-        flex: 1 1 auto !important;
-        padding-left: 0.5rem !important;
+    /* Optimizar los márgenes en pantallas de teléfono */
+    .block-container {{
+        padding-top: 3rem !important;
+        padding-bottom: 2rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        max-width: 450px !important;
+    }}
+
+    /* CONTENEDOR DE ICONOS (Visualización de Widget iOS) */
+    [data-testid="stHorizontalBlock"] {{
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 28px;
+        padding: 1.8rem 1rem !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        margin-top: 1rem !important;
+    }}
+
+    /* Centrar las columnas y botones */
+    [data-testid="column"] {{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }}
 
     /* TRANSFORMAR EL BOTÓN EN IMAGEN */
     .stButton>button {{
-        width: 55px !important;
-        height: 55px !important;
+        width: 85px !important;
+        height: 85px !important;
         padding: 0px !important;
-        border-radius: 16px !important;
+        border-radius: 22px !important;
         border: none !important;
         background-size: cover !important;
         background-position: center !important;
@@ -77,28 +73,25 @@ st.markdown(f"""
         color: transparent !important; /* Oculta el texto nativo del botón */
         font-size: 0px !important;
         cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        transition: transform 0.1s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: all 0.2s ease-in-out;
+        display: block !important;
+        margin: 0 auto !important;
     }}
     
     .stButton>button:active {{
-        transform: scale(0.95); /* Efecto táctil al pulsar */
+        transform: scale(0.92); /* Efecto táctil de pulsación */
     }}
 
-    /* Asignar cada imagen de fondo correspondiente a su botón usando selectores de hermanos */
-    [data-testid="stHorizontalBlock"] button {{
+    /* Asignar la imagen de fondo correspondiente a cada columna */
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) button {{
         background-image: url("data:image/png;base64,{img_pipi_b64}") !important;
     }}
-    [data-testid="stHorizontalBlock"] ~ [data-testid="stHorizontalBlock"] button {{
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(2) button {{
         background-image: url("data:image/png;base64,{img_caca_b64}") !important;
     }}
-    [data-testid="stHorizontalBlock"] ~ [data-testid="stHorizontalBlock"] ~ [data-testid="stHorizontalBlock"] button {{
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(3) button {{
         background-image: url("data:image/png;base64,{img_ambos_b64}") !important;
-    }}
-
-    /* Corrección de márgenes del texto */
-    [data-testid="stMarkdownContainer"] p {{
-        margin-bottom: 0px !important;
     }}
     </style>
 """, unsafe_allow_html=True)
@@ -125,26 +118,14 @@ def guardar_registro(tipo):
     except Exception as e:
         st.error(f"Error: {e}")
 
-# 3. Interfaz de Dos Columnas (El botón ES la imagen)
+# 3. Interfaz Simplificada de 3 Iconos Horizontales
+col1, col2, col3 = st.columns(3)
 
-# Fila 1: Pipí
-col_btn1, col_txt1 = st.columns([1, 4])
-with col_btn1:
-    # El texto "Pipí" dentro del botón no se verá, se reemplaza por la imagen en el CSS
-    st.button("Pipí", key="btn_pipi", on_click=guardar_registro, args=("Pipí",)) 
-with col_txt1:
-    st.markdown('<div style="display:flex; flex-direction:column;"><span style="font-weight:700; font-size:18px; color:#334155;">Pipí</span><span style="font-size:12px; color:#64748B;">Registrar pañal mojado</span></div>', unsafe_allow_html=True)
+with col1:
+    st.button("Pipí", key="btn_pipi", on_click=guardar_registro, args=("Pipí",))
 
-# Fila 2: Caca
-col_btn2, col_txt2 = st.columns([1, 4])
-with col_btn2:
+with col2:
     st.button("Caca", key="btn_caca", on_click=guardar_registro, args=("Caca",))
-with col_txt2:
-    st.markdown('<div style="display:flex; flex-direction:column;"><span style="font-weight:700; font-size:18px; color:#334155;">Caca</span><span style="font-size:12px; color:#64748B;">Registrar deposición</span></div>', unsafe_allow_html=True)
 
-# Fila 3: Ambos
-col_btn3, col_txt3 = st.columns([1, 4])
-with col_btn3:
+with col3:
     st.button("Ambos", key="btn_ambos", on_click=guardar_registro, args=("Ambos",))
-with col_txt3:
-    st.markdown('<div style="display:flex; flex-direction:column;"><span style="font-weight:700; font-size:18px; color:#334155;">Ambos</span><span style="font-size:12px; color:#64748B;">Registrar pipí y caca</span></div>', unsafe_allow_html=True)
