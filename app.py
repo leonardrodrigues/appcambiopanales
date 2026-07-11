@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from streamlit_gsheets import GSheetsConnection
 
 # 1. Configuración de página móvil
@@ -63,7 +64,11 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 def guardar_registro(tipo):
     tipo_limpio = "Pipi" if tipo == "Pipí" else tipo
-    ahora = datetime.now()
+    
+    # Forzar explícitamente la zona horaria de España
+    zona_madrid = ZoneInfo("Europe/Madrid")
+    ahora = datetime.now(zona_madrid)
+    
     fecha = ahora.strftime("%Y-%m-%d")
     hora = ahora.strftime("%H:%M:%S")
     
