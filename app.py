@@ -45,16 +45,22 @@ st.markdown(f"""
 
     /* CONTENEDOR DE ICONOS (Visualización de Widget iOS) */
     [data-testid="stHorizontalBlock"] {{
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 28px;
         padding: 1.8rem 1rem !important;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
         margin-top: 1rem !important;
+        width: 100% !important;
     }}
 
-    /* Centrar las columnas y botones */
-    [data-testid="column"] {{
+    /* Forzar que las columnas pesen exactamente lo mismo y no se deformen */
+    [data-testid="stHorizontalBlock"] [data-testid="column"] {{
+        flex: 1 1 0% !important;
+        min-width: 0 !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
@@ -66,8 +72,8 @@ st.markdown(f"""
         height: 85px !important;
         padding: 0px !important;
         border-radius: 22px !important;
-        border: 1px solid #E2E8F0 !important; /* Borde sutil */
-        background-color: #F1F5F9 !important; /* Color de fondo base */
+        border: 1px solid #E2E8F0 !important;
+        background-color: #F1F5F9 !important;
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
@@ -84,14 +90,14 @@ st.markdown(f"""
         transform: scale(0.92); /* Efecto táctil de pulsación */
     }}
 
-    /* Asignar la imagen de fondo correspondiente buscando por el atributo aria-label */
-    button[aria-label*="pip" i] {{
+    /* ASIGNACIÓN FIJA POR COLUMNAS (Soluciona el problema de las imágenes transparentes) */
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) button {{
         background-image: url("data:image/png;base64,{img_pipi_b64}") !important;
     }}
-    button[aria-label*="cac" i] {{
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(2) button {{
         background-image: url("data:image/png;base64,{img_caca_b64}") !important;
     }}
-    button[aria-label*="amb" i] {{
+    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(3) button {{
         background-image: url("data:image/png;base64,{img_ambos_b64}") !important;
     }}
     </style>
@@ -107,7 +113,7 @@ def guardar_registro(tipo):
     zona_madrid = ZoneInfo("Europe/Madrid")
     ahora = datetime.now(zona_madrid)
     
-    fecha = ahora.strftime("%Y-%m-%d")
+    fecha = coder = ahora.strftime("%Y-%m-%d")
     hora = ahora.strftime("%H:%M:%S")
     
     try:
