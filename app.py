@@ -79,25 +79,31 @@ def guardar_registro(tipo):
 # 3. Interfaz Vertical (Cada opción es una fila horizontal ancha)
 
 # Fila 1: Pipí
-col_img1, col_btn1 = st.columns([2, 1])
+col_img1, col_txt1, col_btn1 = st.columns([1, 2, 1.5])
 with col_img1:
-    st.markdown('<div class="row-container"><img src="app/pipiapp.png" style="width:55px;height:55px;"><span style="font-weight:600; font-size:18px; color:#334155;">Pipí</span></div>', unsafe_allow_html=True)
+    st.image("pipiapp.png", width=55)
+with col_txt1:
+    st.markdown('<div style="padding-top: 12px;"><span style="font-weight:600; font-size:18px; color:#334155;">Pipí</span></div>', unsafe_allow_html=True)
 with col_btn1:
     if st.button("Registrar", key="btn_pipi"):
         guardar_registro("Pipí")
 
 # Fila 2: Caca
-col_img2, col_btn2 = st.columns([2, 1])
+col_img2, col_txt2, col_btn2 = st.columns([1, 2, 1.5])
 with col_img2:
-    st.markdown('<div class="row-container"><img src="app/cacaapp.png" style="width:55px;height:55px;"><span style="font-weight:600; font-size:18px; color:#334155;">Caca</span></div>', unsafe_allow_html=True)
+    st.image("cacaapp.png", width=55)
+with col_txt2:
+    st.markdown('<div style="padding-top: 12px;"><span style="font-weight:600; font-size:18px; color:#334155;">Caca</span></div>', unsafe_allow_html=True)
 with col_btn2:
     if st.button("Registrar", key="btn_caca"):
         guardar_registro("Caca")
 
 # Fila 3: Ambos
-col_img3, col_btn3 = st.columns([2, 1])
+col_img3, col_txt3, col_btn3 = st.columns([1, 2, 1.5])
 with col_img3:
-    st.markdown('<div class="row-container"><img src="app/ambosapp.png" style="width:55px;height:55px;"><span style="font-weight:600; font-size:18px; color:#334155;">Ambos</span></div>', unsafe_allow_html=True)
+    st.image("ambosapp.png", width=55)
+with col_txt3:
+    st.markdown('<div style="padding-top: 12px;"><span style="font-weight:600; font-size:18px; color:#334155;">Ambos</span></div>', unsafe_allow_html=True)
 with col_btn3:
     if st.button("Registrar", key="btn_ambos"):
         guardar_registro("Ambos")
