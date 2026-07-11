@@ -66,14 +66,15 @@ st.markdown(f"""
         height: 85px !important;
         padding: 0px !important;
         border-radius: 22px !important;
-        border: none !important;
+        border: 1px solid #E2E8F0 !important; /* Borde sutil */
+        background-color: #F1F5F9 !important; /* Color de fondo base */
         background-size: cover !important;
         background-position: center !important;
         background-repeat: no-repeat !important;
         color: transparent !important; /* Oculta el texto nativo del botón */
         font-size: 0px !important;
         cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.03);
         transition: all 0.2s ease-in-out;
         display: block !important;
         margin: 0 auto !important;
@@ -83,14 +84,14 @@ st.markdown(f"""
         transform: scale(0.92); /* Efecto táctil de pulsación */
     }}
 
-    /* Asignar la imagen de fondo correspondiente a cada columna */
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(1) button {{
+    /* Asignar la imagen de fondo correspondiente buscando por el atributo aria-label */
+    button[aria-label*="pip" i] {{
         background-image: url("data:image/png;base64,{img_pipi_b64}") !important;
     }}
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(2) button {{
+    button[aria-label*="cac" i] {{
         background-image: url("data:image/png;base64,{img_caca_b64}") !important;
     }}
-    [data-testid="stHorizontalBlock"] [data-testid="column"]:nth-child(3) button {{
+    button[aria-label*="amb" i] {{
         background-image: url("data:image/png;base64,{img_ambos_b64}") !important;
     }}
     </style>
